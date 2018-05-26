@@ -48,4 +48,18 @@ class Ui {
     })
     return infoWindow;
   }
+
+  getSearch(busqueda) {
+    this.api.getData()
+      .then(data => {
+        const handleResponse = data.response.results;
+        this.filterSearch(handleResponse, busqueda);
+      })
+  }
+
+  filterSearch(handleResponse, busqueda) {
+    console.log(handleResponse);
+    const filtered = handleResponse.filter(item => item.calle.indexOf('Gudadalajara') !==  -1);
+    console.log(filtered);
+  };
 }
