@@ -1,6 +1,10 @@
 class Ui {
   constructor() {
     this.api =  new Api();
+    this.initMap();
+  }
+
+  initMap() {
     this.latLng = {lat: 19.390519, lng:-99.3739778};
     this.map = new google.maps.Map(document.getElementById('mapa'), {
       center: this.latLng,
@@ -49,17 +53,18 @@ class Ui {
     return infoWindow;
   }
 
-  getSearch(busqueda) {
+  getSearch(search) {
     this.api.getData()
       .then(data => {
         const handleResponse = data.response.results;
-        this.filterSearch(handleResponse, busqueda);
+        this.filterSearch(handleResponse, search);
       })
   }
 
-  filterSearch(handleResponse, busqueda) {
+  filterSearch(handleResponse, search) {
     console.log(handleResponse);
-    const filtered = handleResponse.filter(item => item.calle.indexOf('Gudadalajara') !==  -1);
-    console.log(filtered);
+    const filtered = handleResponse.filter(item => item.calle.indexOf(search) !==  -1);
+    this.initMap();
+    this.showPins(filtered);
   };
 }
